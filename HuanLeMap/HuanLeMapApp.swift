@@ -12,8 +12,8 @@ struct HuanLeMapApp: App {
     @State var locationsViewModel = LocationViewModel()
     var body: some Scene {
         WindowGroup {
-            LocationsView(viewModel: locationsViewModel)
-//                .environment(locationsViewModel)
+            LocationsView()
+               .environment(locationsViewModel)
         }
     }
 }

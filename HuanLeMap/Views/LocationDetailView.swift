@@ -10,8 +10,7 @@ import MapKit
 
 struct LocationDetailView: View {
     let location : Location
-//    @Environment(LocationViewModel.self) private var viewModel
-    @Bindable var viewModel: LocationViewModel
+    @Environment(LocationViewModel.self) private var viewModel
     
     var body: some View {
         ZStack(alignment: Alignment(horizontal: .leading, vertical: .top)) {
@@ -36,8 +35,8 @@ struct LocationDetailView: View {
 }
 
 #Preview {
-    LocationDetailView(location: LocationsDataService.locations.first!, viewModel: LocationViewModel())
-//        .environment(LocationViewModel())
+    LocationDetailView(location: LocationsDataService.locations.first!)
+        .environment(LocationViewModel())
 }
 
 extension LocationDetailView {
@@ -45,6 +44,10 @@ extension LocationDetailView {
         TabView {
             ForEach(location.imageNames, id: \.self) { imageName in
                 Image(imageName)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: UIScreen.main.bounds.width)
+                    .clipped()
             }
         }
         .frame(height: 500)
@@ -98,7 +101,7 @@ extension LocationDetailView {
     
     private var backButton: some View {
         Button(action: {
-            
+            viewModel.hideSheet()
         }, label: {
             Image(systemName: "xmark")
                 .tint(.primary)

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LocationListView: View {
-    @Bindable var viewModel: LocationViewModel
+    @Environment(LocationViewModel.self) var viewModel
     
     var body: some View {
         List {
@@ -23,7 +23,6 @@ struct LocationListView: View {
             }
         }
         .listStyle(PlainListStyle())
-//        .scaledToFit()
     }
 }
 
@@ -52,5 +51,6 @@ extension LocationListView {
 }
 
 #Preview {
-    LocationListView(viewModel: LocationViewModel())
+    LocationListView()
+        .environment(LocationViewModel())
 }

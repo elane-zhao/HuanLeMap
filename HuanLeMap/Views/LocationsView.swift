@@ -9,9 +9,10 @@ import SwiftUI
 import MapKit
 
 struct LocationsView: View {
-    @Bindable var viewModel: LocationViewModel
+    @Environment(LocationViewModel.self) var viewModel
 
     var body: some View {
+        @Bindable var bindableViewModel = viewModel
         ZStack {
             mapLayer
                 .ignoresSafeArea()
@@ -21,8 +22,8 @@ struct LocationsView: View {
                 Spacer()
                 previewCard
             }
-            .sheet(item: $viewModel.sheetLocation, content: { location in
-                LocationDetailView(location: location, viewModel: viewModel)
+            .sheet(item: $bindableViewModel.sheetLocation, content: { location in
+                LocationDetailView(location: location)
             })
             .padding(.top, 8)
             .padding(.horizontal, 12)
@@ -50,7 +51,7 @@ extension LocationsView {
                     .foregroundStyle(.black)
             }
             if viewModel.showList {
-                LocationListView(viewModel: viewModel)
+                LocationListView()
             }
             
         }
@@ -64,7 +65,7 @@ extension LocationsView {
       ZStack {
           ForEach(viewModel.locations) { location in
             if location == viewModel.currentLocation {
-                LocationPreviewView(viewModel: viewModel, location: location)
+                LocationPreviewView(location: location)
                     .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
                     .padding()
                     .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
@@ -92,7 +93,7 @@ extension LocationsView {
 }
 
 #Preview {
-    LocationsView(viewModel: LocationViewModel())
-//        .environment(LocationViewModel())
+    LocationsView()
+        .environment(LocationViewModel())
 }
 

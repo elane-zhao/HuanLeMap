@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct LocationPreviewView: View {
-    @Bindable var viewModel: LocationViewModel
+    @Environment(LocationViewModel.self) var viewModel
     let location : Location
     
     var body: some View {
+        
         HStack(alignment: .bottom, spacing: 0) {
             VStack(alignment: .leading, spacing: 16) {
                 imageSection
@@ -34,7 +35,8 @@ struct LocationPreviewView: View {
 #Preview {
     ZStack {
         Color.green.ignoresSafeArea()
-        LocationPreviewView(viewModel: LocationViewModel(), location: LocationViewModel().currentLocation)
+        LocationPreviewView(location: LocationViewModel().currentLocation)
+            .environment(LocationViewModel())
             .padding()
     }
 
@@ -67,7 +69,7 @@ extension LocationPreviewView {
     
     private var learnMoreSection : some View {
         Button {
-            
+            viewModel.showSheet()
         } label: {
             Text("Learn more")
                 .font(.headline)
