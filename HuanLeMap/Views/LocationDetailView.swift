@@ -40,13 +40,14 @@ struct LocationDetailView: View {
 }
 
 extension LocationDetailView {
+    
     private var imageSection: some View {
         TabView {
             ForEach(location.imageNames, id: \.self) { imageName in
                 Image(imageName)
                     .resizable()
                     .scaledToFill()
-                    .frame(width: UIScreen.main.bounds.width)
+                    .frame(width: UIDevice.current.userInterfaceIdiom == .pad ? nil : UIScreen.main.bounds.width )
                     .clipped()
             }
         }
@@ -110,7 +111,7 @@ extension LocationDetailView {
         .padding()
         .background(.thickMaterial)
         .cornerRadius(10)
-        .offset(x: 15.0)
         .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+        .padding()
     }
 }

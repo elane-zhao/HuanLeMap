@@ -10,6 +10,7 @@ import MapKit
 
 struct LocationsView: View {
     @Environment(LocationViewModel.self) var viewModel
+    private let ipadWidth: CGFloat = 700
 
     var body: some View {
         @Bindable var bindableViewModel = viewModel
@@ -19,6 +20,7 @@ struct LocationsView: View {
             VStack{
                 header
                     .padding()
+                    .frame(maxWidth: ipadWidth)
                 Spacer()
                 previewCard
             }
@@ -48,13 +50,14 @@ extension LocationsView {
                             .padding()
                             .rotationEffect(Angle(degrees: viewModel.showList ? 0 : 180))
                     }
-                    .foregroundStyle(.black)
+                    
             }
             if viewModel.showList {
                 LocationListView()
             }
             
         }
+        .foregroundStyle(.primary)
         .background(.thickMaterial)
         .cornerRadius(10)
         .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 15)
@@ -68,6 +71,7 @@ extension LocationsView {
                 LocationPreviewView(location: location)
                     .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
                     .padding()
+                    .frame(maxWidth: ipadWidth)
                     .frame(maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/)
                     .cornerRadius(10)
                     .transition(.asymmetric(insertion: .move(edge: .trailing), removal: .move(edge: .leading)))
